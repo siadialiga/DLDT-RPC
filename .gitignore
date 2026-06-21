@@ -1,0 +1,10 @@
+# compiled binary
+*.dll
+*.exe
+*.o
+*.obj
+
+# temporary build files
+/bin/
+*.pdb
+*.log
