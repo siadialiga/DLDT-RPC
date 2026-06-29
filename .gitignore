@@ -6,5 +6,10 @@
 
 # temporary build files
 /bin/
+/x64/
 *.pdb
 *.log
+
+#visual studio
+/.vs/
+*.user
