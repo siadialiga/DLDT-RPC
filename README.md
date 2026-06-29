@@ -4,13 +4,13 @@ Lightweight Discord RPC for Dying Light Developer Tools.
 Shows active map/file details on discord profile.
 
 ## build
-to compile, run the build script or use g++:
+To compile, run the build script or use g++:
 ```cmd
-g++ -O2 -shared -o version.dll dllmain.cpp forwarders.s version.def -static-libgcc -static-libstdc++
+g++ -O2 -shared -o DiscordPresence.dll src\dllmain.cpp -static-libgcc -static-libstdc++
 ```
 
 ## install
-1. copy `version.dll` (dont forget to backup the original file) to your dying light developer tools folder next to `DyingLightEditor.exe`.
-2. run the developer tools. it will load the proxy and update discord.
+1. Copy `DiscordPresence.dll` to your `Dying Light Developer Tools\Plugins_x64_rwdi` directory.
+2. Run the developer tools. it will load the plugin automatically.
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
