@@ -373,7 +373,7 @@ namespace
         if (GetFileAttributesW(path.c_str()) != INVALID_FILE_ATTRIBUTES)
             return;
         WritePrivateProfileStringW(L"DiscordRpc", L"Enabled", L"1", path.c_str());
-        WritePrivateProfileStringW(L"DiscordRpc", L"ClientId", L"1521173705772765376", path.c_str());
+        WritePrivateProfileStringW(L"DiscordRpc", L"ClientId", L"1518223979880382618", path.c_str());
         WritePrivateProfileStringW(L"DiscordRpc", L"LargeImage", L"mainimage", path.c_str());
         WritePrivateProfileStringW(L"DiscordRpc", L"LargeText", L"Dying Light Developer Tools", path.c_str());
         WritePrivateProfileStringW(L"DiscordRpc", L"SmallImage", L"movinggears", path.c_str());
@@ -400,7 +400,7 @@ namespace
         next.pollMilliseconds = ReadIniDword(L"PollMilliseconds", 5000);
         if (next.pollMilliseconds < 1000)
             next.pollMilliseconds = 1000;
-        next.clientId = WideToUtf8(ReadIniWide(L"ClientId", L"1521173705772765376"));
+        next.clientId = WideToUtf8(ReadIniWide(L"ClientId", L"1518223979880382618"));
         next.largeImage = WideToUtf8(ReadIniWide(L"LargeImage", L"mainimage"));
         next.largeText = WideToUtf8(ReadIniWide(L"LargeText", L"Dying Light Developer Tools"));
         next.smallImage = WideToUtf8(ReadIniWide(L"SmallImage", L"movinggears"));
