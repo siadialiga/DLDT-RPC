@@ -173,7 +173,7 @@ namespace
         std::string clientId = "1518223979880382618";
         std::string largeImage = "logo";
         std::string largeText = "Dying Light Developer Tools";
-        std::string smallImage = "movinggears";
+        std::string smallImage = "ineditor";
         std::string smallText = "In Editor";
         std::string stateEditing = "Editing";
         std::string stateIdle = "Selecting Map";
@@ -376,7 +376,7 @@ namespace
         WritePrivateProfileStringW(L"DiscordRpc", L"ClientId", L"1518223979880382618", path.c_str());
         WritePrivateProfileStringW(L"DiscordRpc", L"LargeImage", L"logo", path.c_str());
         WritePrivateProfileStringW(L"DiscordRpc", L"LargeText", L"Dying Light Developer Tools", path.c_str());
-        WritePrivateProfileStringW(L"DiscordRpc", L"SmallImage", L"movinggears", path.c_str());
+        WritePrivateProfileStringW(L"DiscordRpc", L"SmallImage", L"ineditor", path.c_str());
         WritePrivateProfileStringW(L"DiscordRpc", L"SmallText", L"In Editor", path.c_str());
         WritePrivateProfileStringW(L"DiscordRpc", L"StateEditing", L"Editing", path.c_str());
         WritePrivateProfileStringW(L"DiscordRpc", L"StateIdle", L"Selecting Map", path.c_str());
@@ -403,7 +403,7 @@ namespace
         next.clientId = WideToUtf8(ReadIniWide(L"ClientId", L"1518223979880382618"));
         next.largeImage = WideToUtf8(ReadIniWide(L"LargeImage", L"logo"));
         next.largeText = WideToUtf8(ReadIniWide(L"LargeText", L"Dying Light Developer Tools"));
-        next.smallImage = WideToUtf8(ReadIniWide(L"SmallImage", L"movinggears"));
+        next.smallImage = WideToUtf8(ReadIniWide(L"SmallImage", L"ineditor"));
         next.smallText = WideToUtf8(ReadIniWide(L"SmallText", L"In Editor"));
         next.stateEditing = WideToUtf8(ReadIniWide(L"StateEditing", L"Editing"));
         next.stateIdle = WideToUtf8(ReadIniWide(L"StateIdle", L"Selecting Map"));
@@ -640,7 +640,7 @@ namespace
         if (g_config.detectCompiler && (compileWindowVisible || compilerRunning || compileHold))
         {
             state = g_config.stateCompiling;
-            smallImage = "movinggears";
+            smallImage = "ineditor";
             smallText = "Compiling...";
         }
         else if (g_config.detectPlayer && IsAnyProcessRunning(g_config.playerProcesses))
