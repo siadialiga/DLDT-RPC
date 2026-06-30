@@ -19,7 +19,7 @@ namespace chromed
 {
     struct NativePluginRuntime
     {
-        void *object;
+        void* object;
         uintptr_t editor;
         uintptr_t pluginInterface;
         uintptr_t aux;
@@ -40,7 +40,7 @@ namespace chromed
         {
             wchar_t path[MAX_PATH]{};
             GetModuleFileNameW(module, path, MAX_PATH);
-            wchar_t *slash = wcsrchr(path, L'\\');
+            wchar_t* slash = wcsrchr(path, L'\\');
             if (slash)
                 *slash = 0;
             return path;
@@ -55,7 +55,7 @@ namespace chromed
             return s.str();
         }
 
-        void WriteLog(const wchar_t *level, const std::wstring &message)
+        void WriteLog(const wchar_t* level, const std::wstring& message)
         {
             std::lock_guard<std::mutex> lock(g_logMutex);
             std::wstring line = TimeStamp() + L" [" + level + L"] " + message + L"\n";
@@ -71,7 +71,7 @@ namespace chromed
     class Log
     {
     public:
-        static void Open(HMODULE module, const wchar_t *name)
+        static void Open(HMODULE module, const wchar_t* name)
         {
             std::lock_guard<std::mutex> lock(g_logMutex);
             if (g_logStream.is_open())
@@ -80,17 +80,17 @@ namespace chromed
             g_logStream.open(path, std::ios::out | std::ios::app);
         }
 
-        static void Info(const std::wstring &message)
+        static void Info(const std::wstring& message)
         {
             WriteLog(L"INFO", message);
         }
 
-        static void Warn(const std::wstring &message)
+        static void Warn(const std::wstring& message)
         {
             WriteLog(L"WARN", message);
         }
 
-        static void Error(const std::wstring &message)
+        static void Error(const std::wstring& message)
         {
             WriteLog(L"ERROR", message);
         }
@@ -103,7 +103,7 @@ namespace chromed
         }
     };
 
-    std::wstring Utf8ToWide(const std::string &value)
+    std::wstring Utf8ToWide(const std::string& value)
     {
         if (value.empty())
             return L"";
@@ -115,7 +115,7 @@ namespace chromed
         return out;
     }
 
-    std::string WideToUtf8(const std::wstring &value)
+    std::string WideToUtf8(const std::wstring& value)
     {
         if (value.empty())
             return "";
@@ -127,16 +127,16 @@ namespace chromed
         return out;
     }
 
-    void InitializeNativePluginObject(void *object, size_t objectSize, void **vtable, uintptr_t editor, uintptr_t pluginInterface, uintptr_t pluginService, uint32_t pluginCode)
+    void InitializeNativePluginObject(void* object, size_t objectSize, void** vtable, uintptr_t editor, uintptr_t pluginInterface, uintptr_t pluginService, uint32_t pluginCode)
     {
         if (!object || objectSize < 0x100)
             return;
         std::memset(object, 0, objectSize);
-        *reinterpret_cast<void ***>(object) = vtable;
-        *reinterpret_cast<uintptr_t *>(static_cast<uint8_t *>(object) + 0x48) = editor;
-        *reinterpret_cast<uintptr_t *>(static_cast<uint8_t *>(object) + 0x50) = pluginInterface;
-        *reinterpret_cast<uintptr_t *>(static_cast<uint8_t *>(object) + 0x58) = pluginService;
-        *reinterpret_cast<uint32_t *>(static_cast<uint8_t *>(object) + 0x60) = pluginCode;
+        *reinterpret_cast<void***>(object) = vtable;
+        *reinterpret_cast<uintptr_t*>(static_cast<uint8_t*>(object) + 0x48) = editor;
+        *reinterpret_cast<uintptr_t*>(static_cast<uint8_t*>(object) + 0x50) = pluginInterface;
+        *reinterpret_cast<uintptr_t*>(static_cast<uint8_t*>(object) + 0x58) = pluginService;
+        *reinterpret_cast<uint32_t*>(static_cast<uint8_t*>(object) + 0x60) = pluginCode;
     }
 }
 
@@ -146,7 +146,7 @@ namespace
 
     HMODULE g_module = nullptr;
     NativePluginRuntime g_runtime{};
-    void *g_vtable[64] = {};
+    void* g_vtable[64] = {};
     alignas(16) uint8_t g_pluginObject[0x1000] = {};
     HANDLE g_thread = nullptr;
     HANDLE g_stopEvent = nullptr;
@@ -171,7 +171,7 @@ namespace
         bool enabled = true;
         DWORD pollMilliseconds = 5000;
         std::string clientId = "1518223979880382618";
-        std::string largeImage = "mainimage";
+        std::string largeImage = "logo";
         std::string largeText = "Dying Light Developer Tools";
         std::string smallImage = "movinggears";
         std::string smallText = "In Editor";
@@ -195,22 +195,22 @@ namespace
         return 0;
     }
 
-    intptr_t __fastcall Stub1(void *)
+    intptr_t __fastcall Stub1(void*)
     {
         return 0;
     }
 
-    intptr_t __fastcall Stub2(void *, uintptr_t)
+    intptr_t __fastcall Stub2(void*, uintptr_t)
     {
         return 0;
     }
 
-    intptr_t __fastcall Stub3(void *, uintptr_t, uintptr_t)
+    intptr_t __fastcall Stub3(void*, uintptr_t, uintptr_t)
     {
         return 0;
     }
 
-    intptr_t __fastcall Stub4(void *, uintptr_t, uintptr_t, uintptr_t, uintptr_t)
+    intptr_t __fastcall Stub4(void*, uintptr_t, uintptr_t, uintptr_t, uintptr_t)
     {
         return 0;
     }
@@ -219,7 +219,7 @@ namespace
     {
         wchar_t path[MAX_PATH]{};
         GetModuleFileNameW(g_module, path, MAX_PATH);
-        wchar_t *slash = wcsrchr(path, L'\\');
+        wchar_t* slash = wcsrchr(path, L'\\');
         if (slash)
             *slash = 0;
         return path;
@@ -233,22 +233,22 @@ namespace
     std::wstring Lower(std::wstring value)
     {
         std::transform(value.begin(), value.end(), value.begin(), [](wchar_t ch)
-                       { return static_cast<wchar_t>(towlower(ch)); });
+            { return static_cast<wchar_t>(towlower(ch)); });
         return value;
     }
 
-    bool StartsWith(const std::wstring &value, const wchar_t *needle)
+    bool StartsWith(const std::wstring& value, const wchar_t* needle)
     {
         size_t n = wcslen(needle);
         return value.size() >= n && value.compare(0, n, needle) == 0;
     }
 
-    bool Contains(const std::wstring &value, const wchar_t *needle)
+    bool Contains(const std::wstring& value, const wchar_t* needle)
     {
         return value.find(needle) != std::wstring::npos;
     }
 
-    std::vector<std::wstring> SplitProcessList(const std::wstring &value)
+    std::vector<std::wstring> SplitProcessList(const std::wstring& value)
     {
         std::vector<std::wstring> items;
         size_t start = 0;
@@ -269,7 +269,7 @@ namespace
         return items;
     }
 
-    bool IsAnyProcessRunning(const std::wstring &processList)
+    bool IsAnyProcessRunning(const std::wstring& processList)
     {
         std::vector<std::wstring> names = SplitProcessList(processList);
         if (names.empty())
@@ -285,7 +285,7 @@ namespace
             do
             {
                 std::wstring exe = Lower(entry.szExeFile);
-                for (const std::wstring &name : names)
+                for (const std::wstring& name : names)
                 {
                     if (exe == name)
                     {
@@ -299,7 +299,7 @@ namespace
         return found;
     }
 
-    bool TryWindowText(HWND hwnd, std::wstring &out, DWORD timeoutMs)
+    bool TryWindowText(HWND hwnd, std::wstring& out, DWORD timeoutMs)
     {
         wchar_t buffer[512]{};
         DWORD_PTR result = 0;
@@ -310,7 +310,7 @@ namespace
         return true;
     }
 
-    bool TryWindowTitle(HWND hwnd, std::wstring &out)
+    bool TryWindowTitle(HWND hwnd, std::wstring& out)
     {
         return TryWindowText(hwnd, out, 50);
     }
@@ -322,7 +322,7 @@ namespace
 
     BOOL CALLBACK EnumCompileWindows(HWND hwnd, LPARAM lparam)
     {
-        CompileWindowSearch *search = reinterpret_cast<CompileWindowSearch *>(lparam);
+        CompileWindowSearch* search = reinterpret_cast<CompileWindowSearch*>(lparam);
         DWORD pid = 0;
         GetWindowThreadProcessId(hwnd, &pid);
         if (pid != GetCurrentProcessId() || !IsWindowVisible(hwnd))
@@ -341,7 +341,7 @@ namespace
 
     bool IsCompileMapWindowVisible()
     {
-        CompileWindowSearch search{false};
+        CompileWindowSearch search{ false };
         EnumWindows(EnumCompileWindows, reinterpret_cast<LPARAM>(&search));
         if (search.found)
             g_lastCompileTick = GetTickCount64();
@@ -350,19 +350,19 @@ namespace
         return search.found;
     }
 
-    std::wstring ReadIniWide(const wchar_t *name, const wchar_t *fallback)
+    std::wstring ReadIniWide(const wchar_t* name, const wchar_t* fallback)
     {
         wchar_t buffer[512]{};
         GetPrivateProfileStringW(L"DiscordRpc", name, fallback, buffer, static_cast<DWORD>(std::size(buffer)), IniPath().c_str());
         return buffer;
     }
 
-    DWORD ReadIniDword(const wchar_t *name, DWORD fallback)
+    DWORD ReadIniDword(const wchar_t* name, DWORD fallback)
     {
         return GetPrivateProfileIntW(L"DiscordRpc", name, static_cast<INT>(fallback), IniPath().c_str());
     }
 
-    bool ReadIniBool(const wchar_t *name, bool fallback)
+    bool ReadIniBool(const wchar_t* name, bool fallback)
     {
         return ReadIniDword(name, fallback ? 1 : 0) != 0;
     }
@@ -374,7 +374,7 @@ namespace
             return;
         WritePrivateProfileStringW(L"DiscordRpc", L"Enabled", L"1", path.c_str());
         WritePrivateProfileStringW(L"DiscordRpc", L"ClientId", L"1518223979880382618", path.c_str());
-        WritePrivateProfileStringW(L"DiscordRpc", L"LargeImage", L"mainimage", path.c_str());
+        WritePrivateProfileStringW(L"DiscordRpc", L"LargeImage", L"logo", path.c_str());
         WritePrivateProfileStringW(L"DiscordRpc", L"LargeText", L"Dying Light Developer Tools", path.c_str());
         WritePrivateProfileStringW(L"DiscordRpc", L"SmallImage", L"movinggears", path.c_str());
         WritePrivateProfileStringW(L"DiscordRpc", L"SmallText", L"In Editor", path.c_str());
@@ -401,7 +401,7 @@ namespace
         if (next.pollMilliseconds < 1000)
             next.pollMilliseconds = 1000;
         next.clientId = WideToUtf8(ReadIniWide(L"ClientId", L"1518223979880382618"));
-        next.largeImage = WideToUtf8(ReadIniWide(L"LargeImage", L"mainimage"));
+        next.largeImage = WideToUtf8(ReadIniWide(L"LargeImage", L"logo"));
         next.largeText = WideToUtf8(ReadIniWide(L"LargeText", L"Dying Light Developer Tools"));
         next.smallImage = WideToUtf8(ReadIniWide(L"SmallImage", L"movinggears"));
         next.smallText = WideToUtf8(ReadIniWide(L"SmallText", L"In Editor"));
@@ -443,7 +443,7 @@ namespace
 
     BOOL CALLBACK EnumEditorWindows(HWND hwnd, LPARAM lparam)
     {
-        WindowInfo *info = reinterpret_cast<WindowInfo *>(lparam);
+        WindowInfo* info = reinterpret_cast<WindowInfo*>(lparam);
         DWORD pid = 0;
         GetWindowThreadProcessId(hwnd, &pid);
         if (pid != info->pid || GetParent(hwnd) != nullptr || !IsWindowVisible(hwnd))
@@ -460,7 +460,7 @@ namespace
         return TRUE;
     }
 
-    std::wstring FileNameFromPath(const std::wstring &path)
+    std::wstring FileNameFromPath(const std::wstring& path)
     {
         size_t slash = path.find_last_of(L"\\/");
         if (slash != std::wstring::npos)
@@ -470,7 +470,7 @@ namespace
 
     std::wstring CurrentEditorTarget()
     {
-        WindowInfo info{GetCurrentProcessId(), L""};
+        WindowInfo info{ GetCurrentProcessId(), L"" };
         EnumWindows(EnumEditorWindows, reinterpret_cast<LPARAM>(&info));
         if (info.title.empty())
         {
@@ -498,7 +498,7 @@ namespace
         return result;
     }
 
-    std::string EscapeJson(const std::string &value)
+    std::string EscapeJson(const std::string& value)
     {
         std::string out;
         out.reserve(value.size() + 8);
@@ -547,11 +547,11 @@ namespace
         }
     }
 
-    bool WritePacket(uint32_t opcode, const std::string &payload)
+    bool WritePacket(uint32_t opcode, const std::string& payload)
     {
         if (g_pipe == INVALID_HANDLE_VALUE)
             return false;
-        DiscordPacket packet{opcode, static_cast<uint32_t>(payload.size())};
+        DiscordPacket packet{ opcode, static_cast<uint32_t>(payload.size()) };
         DWORD written = 0;
         if (!WriteFile(g_pipe, &packet, sizeof(packet), &written, nullptr) || written != sizeof(packet))
             return false;
@@ -593,7 +593,7 @@ namespace
         return std::to_string(GetCurrentProcessId()) + "-" + std::to_string(static_cast<long long>(nonce));
     }
 
-    bool SendActivity(const std::string &details, const std::string &state, const std::string &smallImage, const std::string &smallText)
+    bool SendActivity(const std::string& details, const std::string& state, const std::string& smallImage, const std::string& smallText)
     {
         if (!g_config.enabled || !ConnectDiscord())
             return false;
@@ -649,7 +649,7 @@ namespace
             smallImage = "playing";
             smallText = "In Game";
         }
-        return ActivitySnapshot{details, state, smallImage, smallText};
+        return ActivitySnapshot{ details, state, smallImage, smallText };
     }
 
     void UpdateNow()
@@ -658,7 +658,7 @@ namespace
         SendActivity(activity.details, activity.state, activity.smallImage, activity.smallText);
     }
 
-    DWORD WINAPI RpcThread(void *)
+    DWORD WINAPI RpcThread(void*)
     {
         chromed::Log::Info(L"ChromeDiscordRpc thread started");
         g_startTime = static_cast<long long>(time(nullptr));
@@ -746,32 +746,32 @@ namespace
         ClosePipe();
     }
 
-    intptr_t __fastcall PluginLoad(void *)
+    intptr_t __fastcall PluginLoad(void*)
     {
         chromed::Log::Info(L"ChromeDiscordRpc plugin load callback");
         StartRpc();
         return 1;
     }
 
-    intptr_t __fastcall PluginCode(void *)
+    intptr_t __fastcall PluginCode(void*)
     {
         return g_runtime.pluginCode;
     }
 
     void BuildVtable()
     {
-        for (void *&entry : g_vtable)
-            entry = reinterpret_cast<void *>(&Stub4);
-        g_vtable[0] = reinterpret_cast<void *>(&Stub2);
-        g_vtable[1] = reinterpret_cast<void *>(&Stub1);
-        g_vtable[2] = reinterpret_cast<void *>(&Stub1);
-        g_vtable[3] = reinterpret_cast<void *>(&Stub0);
-        g_vtable[4] = reinterpret_cast<void *>(&Stub0);
-        g_vtable[5] = reinterpret_cast<void *>(&Stub0);
-        g_vtable[6] = reinterpret_cast<void *>(&Stub0);
-        g_vtable[8] = reinterpret_cast<void *>(&PluginLoad);
-        g_vtable[12] = reinterpret_cast<void *>(&Stub3);
-        g_vtable[16] = reinterpret_cast<void *>(&PluginCode);
+        for (void*& entry : g_vtable)
+            entry = reinterpret_cast<void*>(&Stub4);
+        g_vtable[0] = reinterpret_cast<void*>(&Stub2);
+        g_vtable[1] = reinterpret_cast<void*>(&Stub1);
+        g_vtable[2] = reinterpret_cast<void*>(&Stub1);
+        g_vtable[3] = reinterpret_cast<void*>(&Stub0);
+        g_vtable[4] = reinterpret_cast<void*>(&Stub0);
+        g_vtable[5] = reinterpret_cast<void*>(&Stub0);
+        g_vtable[6] = reinterpret_cast<void*>(&Stub0);
+        g_vtable[8] = reinterpret_cast<void*>(&PluginLoad);
+        g_vtable[12] = reinterpret_cast<void*>(&Stub3);
+        g_vtable[16] = reinterpret_cast<void*>(&PluginCode);
     }
 }
 
@@ -786,7 +786,7 @@ extern "C" __declspec(dllexport) void ChromeDiscordRpc_StopNow()
     StopRpc(true);
 }
 
-extern "C" __declspec(dllexport) void *__fastcall InitializeMe(uintptr_t editor, uint32_t pluginIndex, uintptr_t pluginInterface, uintptr_t aux, int64_t)
+extern "C" __declspec(dllexport) void* __fastcall InitializeMe(uintptr_t editor, uint32_t pluginIndex, uintptr_t pluginInterface, uintptr_t aux, int64_t)
 {
     uint32_t pluginCode = (pluginIndex & 0x3F | 0x40) << 8;
     chromed::InitializeNativePluginObject(g_pluginObject, sizeof(g_pluginObject), g_vtable, editor, pluginInterface, 0, pluginCode);
