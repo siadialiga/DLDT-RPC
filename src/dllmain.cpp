@@ -170,7 +170,7 @@ namespace
     {
         bool enabled = true;
         DWORD pollMilliseconds = 5000;
-        std::string clientId = "1521173705772765376";
+        std::string clientId = "1518223979880382618";
         std::string largeImage = "mainimage";
         std::string largeText = "Dying Light Developer Tools";
         std::string smallImage = "movinggears";
